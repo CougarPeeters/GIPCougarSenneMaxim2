@@ -11,7 +11,7 @@ namespace GIPHoodie.Models
 
         public int ArtikelNr { get; set; }
 
-        public int Aantal { get; set; }
+        public int? Aantal { get; set; }
 
         public double Prijs { get; set; }
 

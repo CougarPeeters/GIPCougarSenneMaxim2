@@ -56,21 +56,40 @@ namespace GIPHoodie.Persistence
 
         public void PasMandAan(WinkelmandItem winkelmanditem) // een geselecteerd artikel in de database in een winkelmand opslaan of aanpassen
         {
+            
             MySqlConnection conn = new MySqlConnection(connStr);
             conn.Open();
             string qry1 = "select * from tblartikel where KlantID=" + winkelmanditem.KlantNr + " and ArtikelID="
                 + winkelmanditem.ArtikelNr;
             MySqlCommand cmd = new MySqlCommand(qry1, conn);
             MySqlDataReader dtr = cmd.ExecuteReader();
+            bool mand = true;
             if(dtr.HasRows)
             {
+               mand = true;
+            }
+            else
+            {
+                mand = false;
+
+            }
+            conn.Close();
+
+            conn.Open();
+            if (mand==true)
+            {
+                //int aantal = winkelmanditem.Aantal;
                 string qry2 = "update tblwinkelmand SET Aantal = '" + winkelmanditem.Aantal + "' where(KlantID = '1') and(ArtikelID = '1')";
             }
             else
             {
                 string qry3 = "insert into tblwinkelmand(KlantID, ArtikelID, Aantal) values(" + winkelmanditem.KlantNr +
-                    "," + winkelmanditem.ArtikelNr + "," + winkelmanditem.Aantal + ")";
+                 "," + winkelmanditem.ArtikelNr + "," + winkelmanditem.Aantal + ")";
             }
+            conn.Close();
+            conn.Open();
+            string qry4 = "update tblartikel set voorraad = vooraad - aantal where ArtikelID=" + winkelmanditem.ArtikelNr;
+            conn.Close();
         }
     }
 }
