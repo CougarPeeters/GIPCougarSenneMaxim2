@@ -27,7 +27,7 @@ namespace GIPHoodie.Controllers
 
         //public IActionResult Index()
         //{
-
+        //    return RedirectToAction("Winkelmandje");
         //}
 
 
@@ -52,6 +52,18 @@ namespace GIPHoodie.Controllers
 
             persistenceCode.PasMandAan(winkelmand);
             return RedirectToAction("Winkelmand", winkelmand);
+        }
+
+        public IActionResult Winkelmand()
+        {
+            Klant klant = new Klant();
+            klant.KlantID = Convert.ToInt32(HttpContext.Session.GetInt32("KlantID"));
+            VMWinkelmand vMWinkelmand = new VMWinkelmand();
+            vMWinkelmand.klant = persistenceCode.KlantOphalen(klant.KlantID);
+            vMWinkelmand.winkelRepository.winkelmandItems = persistenceCode.MandOphalen();
+            vMWinkelmand.totaal = persistenceCode.BerekenTotaal();
+
+            return View(vMWinkelmand);
         }
     }
 }

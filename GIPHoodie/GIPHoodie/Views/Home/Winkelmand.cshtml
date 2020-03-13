@@ -1,0 +1,101 @@
+﻿@model  GIPHoodie.Models.VMWinkelmand
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <title>Winkelmand</title>
+</head>
+<body class="m-3">
+    <form asp-action="Winkelmand" asp-controller="Home">
+        <h2>Online Hoodieshop - Winkelmandje</h2>
+        <table class="table">
+            <tr>
+                <td>KlantNr:</td>
+                <td>@Model.klant.KlantID</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Naam:</td>
+                <td>@Model.klant.Naam</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Adres:</td>
+                <td>@Model.klant.Adres</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>@Model.klant.PostCode @Model.klant.Gemeente</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Besteldatum:</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <table class="table">
+            <tr>
+                <td></td>
+                <td>Foto</td>
+                <td>ArtNr</td>
+                <td>naam</td>
+                <td>Aantal</td>
+                <td>Prijs</td>
+                <td>Totaal</td>
+            </tr>
+            @foreach (var mand in Model.winkelRepository.winkelmandItems)
+            {
+                <tr>
+                    <td><a asp-action="verwijderen" asp-controller="Home"><img src="~/images/vuilbak.png" /></a></td>
+                    <td><img class="kleinefoto" src="@Url.Content("~/images/" + mand.Foto)" /></td>
+                    <td>@mand.ArtikelNr</td>
+                    <td>@mand.naam</td>
+                    <td>@mand.Aantal</td>
+                    <td>@mand.Prijs</td>
+                    <td>@mand.totaal</td>
+                </tr>
+            }
+        </table>
+
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Totaal excl.:</td>
+                <td>@Model.totaal.TotaalExcl</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>BTW (21%):</td>
+                <td>@Model.totaal.BTW</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Totaal incl.:</td>
+                <td>@Model.totaal.TotaalIncl</td>
+            </tr>
+        </table>
+        <p><input type="submit" value="inhoud van het winkelmandje bestellen" /></p>
+        <p><a asp-action="Index" asp-controller="Home">Terug naar de catalogus</a></p>
+    </form>
+</body>
+</html>

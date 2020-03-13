@@ -9,16 +9,16 @@ namespace GIPHoodie.Models
     {
         public int KlantNr { get; set; }
 
+        public string naam { get; set; }
+
         public int ArtikelNr { get; set; }
 
         public int? Aantal { get; set; }
 
+        public string Foto { get; set; }
+
         public double Prijs { get; set; }
 
-        public double ExclTotaal { get; set; }
-
-        public double BTW { get; set; }
-
-        public double InclTotaal { get; set; }
+        public double totaal { get; set; }
     }
 }
